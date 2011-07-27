@@ -1,4 +1,4 @@
-var makeError = require('../index')
+var makeError = require('makeerror')
   , assert = require('assert')
 
 exports['simple error'] = function(beforeExit) {
