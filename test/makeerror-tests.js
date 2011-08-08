@@ -67,3 +67,36 @@ exports['different but the same'] = function(beforeExit) {
   assert.ok(er2 instanceof MyError2, 'Must be an instance of MyError2')
   assert.ok(!(er2 instanceof MyError1), 'Must not be an instance of MyError1')
 }
+
+exports['custom prototype'] = function(beforeExit) {
+  var parentName = 'ParentError'
+    , ParentError = makeError(parentName)
+    , childName = 'ChildError'
+    , ChildError = makeError(childName, '', { proto: ParentError() })
+    , parentEr = ParentError()
+    , childEr = ChildError()
+
+  assert.strictEqual(parentEr.name, parentName, 'expect parentName')
+  assert.ok(parentEr instanceof ParentError, 'expect instanceof ParentError')
+  assert.ok(parentEr instanceof Error, 'expect instanceof Error')
+  assert.ok(!(parentEr instanceof ChildError), 'not an instanceof ChildError')
+
+  assert.strictEqual(childEr.name, childName, 'expect childName')
+  assert.ok(childEr instanceof ChildError, 'expect instanceof ChildError')
+  assert.ok(childEr instanceof ParentError, 'expect instanceof ParentError')
+  assert.ok(childEr instanceof Error, 'expect instanceof Error')
+}
+
+exports['custom prototype two levels'] = function(beforeExit) {
+  var GParentError = makeError('GParentError')
+    , ParentError = makeError('ParentError', '', { proto: GParentError() })
+    , childName = 'ChildError'
+    , ChildError = makeError(childName, '', { proto: ParentError() })
+    , childEr = ChildError()
+
+  assert.strictEqual(childEr.name, childName, 'expect childName')
+  assert.ok(childEr instanceof ChildError, 'expect instanceof ChildError')
+  assert.ok(childEr instanceof ParentError, 'expect instanceof ParentError')
+  assert.ok(childEr instanceof GParentError, 'expect instanceof GParentError')
+  assert.ok(childEr instanceof Error, 'expect instanceof Error')
+}
