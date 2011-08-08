@@ -100,3 +100,17 @@ exports['custom prototype two levels'] = function(beforeExit) {
   assert.ok(childEr instanceof GParentError, 'expect instanceof GParentError')
   assert.ok(childEr instanceof Error, 'expect instanceof Error')
 }
+
+exports['default templated message'] = function(beforeExit) {
+  var name = 'MyError'
+    , MyError = makeError(name, 'The answer is {answer} not {wrong.answer}')
+    , er = MyError({ answer: 42, wrong: { answer: 43 }})
+  assert.strictEqual(er.message, 'The answer is 42 not 43')
+}
+
+exports['custom templated message'] = function(beforeExit) {
+  var name = 'MyError'
+    , MyError = makeError(name)
+    , er = MyError('The answer is {answer}', { answer: 42 })
+  assert.strictEqual(er.message, 'The answer is 42')
+}

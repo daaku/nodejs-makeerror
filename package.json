@@ -1,7 +1,7 @@
 {
   "name": "makeerror",
   "description": "A library to make errors.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Naitik Shah <n@daaku.org>",
   "main": "lib/makeerror",
   "repository": {
@@ -9,6 +9,9 @@
     "url": "http://github.com/nshah/nodejs-makeerror"
   },
   "scripts": { "test": "./node_modules/.bin/expresso -c" },
+  "dependencies": {
+    "tmpl": ">= 1.0.0"
+  },
   "devDependencies": {
     "expresso": ">= 0.8.1"
   },
