@@ -121,3 +121,24 @@ exports['custom templated message toString'] = function(beforeExit) {
     , er = MyError('The answer is {answer}', { answer: 42 })
   assert.strictEqual(er.toString(), 'The answer is 42')
 }
+
+exports['custom prototype toString'] = function(beforeExit) {
+  var theMessage = 'Some message'
+    , parentName = 'ParentError'
+    , ParentError = makeError(parentName)
+    , childName = 'ChildError'
+    , ChildError = makeError(childName, theMessage, { proto: ParentError() })
+    , parentEr = ParentError()
+    , childEr = ChildError()
+
+  assert.strictEqual(childEr.toString(), theMessage, 'expect message on child')
+}
+
+exports['proto must be created via makeError'] = function(beforeExit) {
+  assert.throws(
+    function() {
+      makeError('Child', '', { proto: new Error() })
+    },
+    /created via makeError/
+  );
+}
