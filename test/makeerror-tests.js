@@ -149,3 +149,11 @@ exports['stack trace'] = function(beforeExit) {
     , er = MyError()
   assert.match(er.stack, new RegExp(name + '\\n *at ' + __filename))
 }
+
+exports['stack trace with message'] = function(beforeExit) {
+  var name = 'MyError'
+    , message = 'the message'
+    , MyError = makeError(name, message)
+    , er = MyError()
+  assert.match(er.stack, new RegExp(name + ': ' + message + '\\n *at ' + __filename))
+}
