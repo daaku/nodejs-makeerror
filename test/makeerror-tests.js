@@ -140,5 +140,12 @@ exports['proto must be created via makeError'] = function(beforeExit) {
       makeError('Child', '', { proto: new Error() })
     },
     /created via makeError/
-  );
+  )
+}
+
+exports['stack trace'] = function(beforeExit) {
+  var name = 'MyError'
+    , MyError = makeError(name)
+    , er = MyError()
+  assert.match(er.stack, new RegExp(name + '\\n *at ' + __filename))
 }
