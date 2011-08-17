@@ -1,11 +1,18 @@
 makeerror
 =========
 
-A library to make errors. Makes an Error constructor function with the
-signature:
+A library to make errors.
+
+
+Basics
+------
+
+Makes an Error constructor function with the signature below. All arguments are
+optional, and if the first argument is not a `String`, it will be assumed to be
+`data`:
 
 ```javascript
-function([[message,] data])
+function(message, data)
 ```
 
 You'll typically do something like:
@@ -22,11 +29,16 @@ var er = UnknownFileTypeError()
 `er` will have a prototype chain that ensures:
 
 ```javascript
-er instanceof Error
 er instanceof UnknownFileTypeError
+er instanceof Error
 ```
 
+
+Templatized Error Messages
+--------------------------
+
 There is support for simple string substitutions like:
+
 ```javascript
 var makeError = require('makeerror')
 var UnknownFileTypeError = makeError(
@@ -36,16 +48,30 @@ var UnknownFileTypeError = makeError(
 var er = UnknownFileTypeError({ type: 'bmp' })
 ```
 
-Now
+Now `er.message` or `er.toString()` will return `'The specified type "bmp" is
+not known.'`.
+
+
+Prototype Hierarchies
+---------------------
+
+You can create simple hierarchies as well using the `prototype` chain:
+
 ```javascript
-er.message
+var makeError = require('makeerror')
+var ParentError = makeError('ParentError')
+var ChildError = makeError(
+  'ChildError',
+  'The child error.',
+  { proto: ParentError() }
+)
+var er = ChildError()
 ```
-or
+
+`er` will have a prototype chain that ensures:
+
 ```javascript
-er.toString()
+er instanceof ChildError
+er instanceof ParentError
+er instanceof Error
 ```
-will return
-```javascript
-'The specified type "bmp" is not known.'
-```
-.
