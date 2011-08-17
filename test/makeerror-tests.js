@@ -114,3 +114,10 @@ exports['custom templated message'] = function(beforeExit) {
     , er = MyError('The answer is {answer}', { answer: 42 })
   assert.strictEqual(er.message, 'The answer is 42')
 }
+
+exports['custom templated message toString'] = function(beforeExit) {
+  var name = 'MyError'
+    , MyError = makeError(name)
+    , er = MyError('The answer is {answer}', { answer: 42 })
+  assert.strictEqual(er.toString(), 'The answer is 42')
+}
