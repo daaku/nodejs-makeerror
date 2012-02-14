@@ -1,19 +1,19 @@
 {
   "name": "makeerror",
   "description": "A library to make errors.",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Naitik Shah <n@daaku.org>",
   "main": "lib/makeerror",
   "repository": {
     "type": "git",
     "url": "http://github.com/nshah/nodejs-makeerror"
   },
-  "scripts": { "test": "NODE_PATH=./lib ./node_modules/.bin/mocha --ui exports" },
+  "scripts": { "test": "NODE_PATH=./lib mocha --ui exports" },
   "dependencies": {
-    "tmpl": ">= 1.0.0"
+    "tmpl": "1.0.x"
   },
   "devDependencies": {
-    "mocha": ">= 0.12.0"
+    "mocha": "0.12.x"
   },
-  "engines": { "node": ">= 0.6.10" }
+  "engines": { "node": "0.6.x" }
 }
