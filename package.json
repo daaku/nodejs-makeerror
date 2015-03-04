@@ -1,7 +1,8 @@
 {
   "name": "makeerror",
   "description": "A library to make errors.",
-  "version": "1.0.9",
+  "version": "1.0.10",
+  "license": "BSD-3-Clause",
   "author": "Naitik Shah <n@daaku.org>",
   "main": "lib/makeerror",
   "repository": {
